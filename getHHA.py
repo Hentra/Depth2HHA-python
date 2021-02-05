@@ -60,29 +60,10 @@ def getHHA(C, D, RD):
     return HHA
 
 if __name__ == "__main__":
-    D, RD = getImage()
-    camera_matrix = getCameraParam('color')
+    D = cv2.imread(os.path.join("/home/henri/trainingData/depth", '10.png'), cv2.COLOR_BGR2GRAY)/1000
+    camera_matrix = np.array([[610.603515625, 0.0, 326.71661376953125], [0.0, 609.9224243164062, 251.09959411621094], [0.0, 0.0, 1.0]])
+    print(camera_matrix)
     print('max gray value: ', np.max(D))        # make sure that the image is in 'meter'
-    hha = getHHA(camera_matrix, D, RD)
-    hha_complete = getHHA(camera_matrix, D, D)
+    hha = getHHA(camera_matrix, D, D)
     cv2.imwrite('demo/hha.png', hha)
-    cv2.imwrite('demo/hha_complete.png', hha_complete)
     
-    
-    ''' multi-peocessing example '''
-    '''
-    from multiprocessing import Pool
-    
-    def generate_hha(i):
-        # generate hha for the i-th image
-        return
-    
-    processNum = 16
-    pool = Pool(processNum)
-
-    for i in range(img_num):
-        print(i)
-        pool.apply_async(generate_hha, args=(i,))
-        pool.close()
-        pool.join()
-    ''' 
