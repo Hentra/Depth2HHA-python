@@ -3,6 +3,7 @@ import math
 import cv2
 import os
 import math
+import sys
 
 from utils.rgbd_util import *
 from utils.getCameraParam import *
@@ -60,10 +61,10 @@ def getHHA(C, D, RD):
     return HHA
 
 if __name__ == "__main__":
-    D = cv2.imread(os.path.join("/home/henri/trainingData/depth", '10.png'), cv2.COLOR_BGR2GRAY)/1000
+    D = cv2.imread(sys.argv[1], cv2.COLOR_BGR2GRAY)/1000
     camera_matrix = np.array([[610.603515625, 0.0, 326.71661376953125], [0.0, 609.9224243164062, 251.09959411621094], [0.0, 0.0, 1.0]])
     print(camera_matrix)
     print('max gray value: ', np.max(D))        # make sure that the image is in 'meter'
     hha = getHHA(camera_matrix, D, D)
-    cv2.imwrite('demo/hha.png', hha)
+    cv2.imwrite(sys.argv[2], hha)
     
